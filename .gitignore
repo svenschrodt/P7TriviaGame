@@ -1,52 +1,29 @@
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
+# TriviaGame .gitignore
+# 2021-02-07
+# exclude IDE etc.specific 
+.settings
+.project
+.buildpath
+.idea/
 
-# Email spool folder
-/app/spool/*
+# exclude project specific temp. deprecated resources
+*.depr
+/tmp
+./tmp
 
-# Cache, session files and logs (Symfony3)
-/var/cache/*
-/var/logs/*
-/var/sessions/*
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-!var/sessions/.gitkeep
+# exclude 3rd party stuff
+/vendor
+composer.json
+composer.lock
+.phpunit.result.cache
+phpunit # symlink to vendor/bin/phpunit
 
-# Logs (Symfony4)
-/var/log/*
-!var/log/.gitkeep
-
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
-
-# Managed by Composer
-/app/bootstrap.php.cache
-/var/bootstrap.php.cache
-/bin/*
-!bin/console
-!bin/symfony_requirements
-/vendor/
-
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
-
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
-# Build data
-/build/
-
-# Composer PHAR
-/composer.phar
-
-# Backup entities generated with doctrine:generate:entities command
-**/Entity/*~
-
-# Embedded web-server pid file
-/.web-server-pid
+# exclude local functional testing resources
+index.php
+temp.php
+tmp.php
+#.htaccess
+post.html
+# exclude local configuration
+.local.conf.php
+Foo.php
