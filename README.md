@@ -38,3 +38,4 @@ Simple trivia game app
 - PSR-* compliance
 - Deployable via composer
 - 100% code coverage in unit testing
+- 

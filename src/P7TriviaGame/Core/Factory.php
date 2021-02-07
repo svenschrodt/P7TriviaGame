@@ -9,6 +9,7 @@
  * @version 0.1
  * @since 2021-02-06
  * @link https://github.com/svenschrodt/P7TriviaGame
+ * @link https://travis-ci.org/github/svenschrodt/P7TriviaGame/
  * @license https://github.com/svenschrodt/P7TriviaGame/blob/master/LICENSE.md
  */
 
@@ -16,7 +17,9 @@ namespace P7TriviaGame\Core;
 
 
 use P7TriviaGame\Application\Error;
+use P7TriviaGame\Application\View;
 use P7TriviaGame\Persistence\Session;
+use P7TriviaGame\Application\Configuration;
 
 class Factory
 {
@@ -27,7 +30,9 @@ class Factory
      *
      * @var mixed[] | null[]
      */
-    protected static array $container = ['session' => null, 'foo' => null];
+    protected static array $container = [
+        'session' => null, 'foo' => null, 'config' => null, 'view' => null, 'configuration' => null
+    ];
 
     /**
      * Getter for instances built by this factory
@@ -61,6 +66,21 @@ class Factory
 
                     }
                     return self::$container['foo'];
+                    break;
+
+                case 'view':
+                    if (is_null(self::$container['view'])) {
+                        self::$container['view'] = new View();
+                    }
+                    return self::$container['view'];
+                    break;
+                    //
+
+                case 'configuration':
+                    if (is_null(self::$container['configuration'])) {
+                        self::$container['configuration'] = new Configuration();
+                    }
+                    return self::$container['configuration'];
                     break;
             }
         }
