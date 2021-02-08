@@ -35,6 +35,8 @@ Simple trivia game app
 
 ### TODOs | future goals
 
+- Caching API response to file cache (later: DB etc.)
+- Using token to suppress duplicates for six hours
 - PSR-* compliance
 - Deployable via composer
 - 100% code coverage in unit testing

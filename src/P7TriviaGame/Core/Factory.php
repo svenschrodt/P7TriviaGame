@@ -18,6 +18,8 @@ namespace P7TriviaGame\Core;
 
 use P7TriviaGame\Application\Error;
 use P7TriviaGame\Application\View;
+use P7TriviaGame\Communication\HttpRequest;
+use P7TriviaGame\Communication\HttpResponse;
 use P7TriviaGame\Persistence\Session;
 use P7TriviaGame\Application\Configuration;
 
@@ -31,7 +33,8 @@ class Factory
      * @var mixed[] | null[]
      */
     protected static array $container = [
-        'session' => null, 'foo' => null, 'config' => null, 'view' => null, 'configuration' => null
+        'session' => null, 'foo' => null, 'config' => null, 'view' => null, 'configuration' => null,
+        'request' => null, 'response' => null
     ];
 
     /**
@@ -81,6 +84,20 @@ class Factory
                         self::$container['configuration'] = new Configuration();
                     }
                     return self::$container['configuration'];
+                    break;
+
+                case 'response':
+                    if (is_null(self::$container['response'])) {
+                        self::$container['response'] = new HttpResponse();
+                    }
+                    return self::$container['response'];
+                    break;
+
+                case 'request':
+                    if (is_null(self::$container['request'])) {
+                        self::$container['request'] = new HttpRequest();
+                    }
+                    return self::$container['request'];
                     break;
             }
         }

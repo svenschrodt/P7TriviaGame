@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="Autoload.php" colors="true" verbose="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <!--  Rules for code coverage -->
   <coverage cacheDirectory="tmp/phpucc"
             includeUncoveredFiles="true"
             processUncoveredFiles="true"
-            pathCoverage="false"
+            pathCoverage="true"
             ignoreDeprecatedCodeUnits="true"
             disableCodeCoverageIgnore="true">
     <include>
-      <directory>./</directory>
+      <directory suffix=".php">src</directory>
     </include>
     <exclude>
       <directory>./vendor</directory>
     </exclude>
   </coverage>
   <testsuites>
-    <testsuite name="Testing TriviaGame">
+    <testsuite name="Testing units of P7TriviaGame">
       <directory>./test/</directory>
     </testsuite>
   </testsuites>
-  <!--  Rules for code coverage -->
 </phpunit>

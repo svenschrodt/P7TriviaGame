@@ -40,12 +40,35 @@ class Configuration
 
     const FILE_CACHE_DIRECTORY = 'tmp/';
 
+    const APPLICATION_PATH_SUFFIX = 'Application';
 
 
+    const APPLICATION_CACHE_PATH_SUFFIX = '/Application/Cache/';
 
+    /**
+     * Containing current base path of application
+     *
+     * @var string|false
+     */
+    protected string $basePath = '';
 
+    /**
+     * Containing name of current theme
+     *
+     * @deprecated
+     * @var string
+     */
+    protected string $themeName = '';
 
+    /**
+     * Containing name of current theme
+     *
+     *
+     * @var string
+     */
     protected string $currentTheme = 'default';
+
+
 
     /**
      * @return string
@@ -56,6 +79,8 @@ class Configuration
     }
 
     /**
+     *
+     *
      * @param string $currentTheme
      */
     public function setCurrentTheme(string $currentTheme): void
@@ -96,10 +121,16 @@ class Configuration
     }
 
 
+    public function getNamedPath(string $name) : string
+    {
+        switch ($name) {
+            case self::APPLICATION_CACHE_PATH_SUFFIX:
+                return $this->basePath . self::APPLICATION_CACHE_PATH_SUFFIX;
+                break;
+        }
+    }
 
-    protected string $basePath = '';
 
-    protected string $themeName = '';
 
     public function __construct()
     {

@@ -1,0 +1,15 @@
+
+summary::-webkit-details-marker,
+summary::marker {
+    content:  " 🡳 ";
+    color: #181e76;
+    font-size: 1.2em;
+    transition: all 0.5s;
+}
+
+details[open] summary::-webkit-details-marker,
+details[open] summary::marker {
+    content:  " 🡱 ";
+    color: #181e76;
+    transform: scale(1,-1);
+}

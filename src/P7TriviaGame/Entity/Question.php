@@ -7,7 +7,8 @@ declare(strict_types=1);
  *  - Difficulty level
  *  - Type of question (multiple/boolean)
  *  - Correct answer
- *  - wrong answer(s)
+ *  - Wrong answer(s)
+ *  -
  *
  *
  * @see https://opentdb.com/api_config.php
@@ -16,7 +17,7 @@ declare(strict_types=1);
  * @version 0.1
  * @since 2021-02-06
  * @link https://github.com/svenschrodt/P7TriviaGame
-* @link https://travis-ci.org/github/svenschrodt/P7TriviaGame/
+ * @link https://travis-ci.org/github/svenschrodt/P7TriviaGame/
  * @license https://github.com/svenschrodt/P7TriviaGame/blob/master/LICENSE.md
  */
 
@@ -24,6 +25,12 @@ namespace P7TriviaGame\Entity;
 
 class Question
 {
+    /**
+     * Constant array holding available dificulty levels
+     *
+     * @var array
+     */
+    const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard'];
 
     /**
      * Name of category
@@ -67,6 +74,41 @@ class Question
     protected string $correctAnswer = '';
 
     /**
+     * @return bool
+     */
+    public function isAnsweredCorrectly(): bool
+    {
+        return $this->answeredCorrectly;
+    }
+
+    /**
+     * @param bool $answeredCorrectly
+     * @return Question
+     */
+    public function setAnsweredCorrectly(bool $answeredCorrectly): Question
+    {
+        $this->answeredCorrectly = $answeredCorrectly;
+        return $this;
+    }
+
+
+    /**
+     *
+     * @return bool
+     */
+    public function getAnsweredCorrectly( ): bool
+    {
+        return $this->answeredCorrectly;
+    }
+
+    /**
+     * Flag showing if correct answer was given
+     *
+     * @var bool
+     */
+    protected bool $answeredCorrectly = false;
+
+    /**
      * The current question's text
      *
      * @var string
@@ -98,6 +140,8 @@ class Question
      * @var string
      */
     protected string $givenAnswer = '';
+
+
 
     /**
      * @return string

@@ -1,11 +1,24 @@
-    <details class="game_item"<?= ($id==0) ? ' open' : '' ?>>
-        <summary> <p>Question n° <?= $id+1 ?> - <?= $item->question?></p>
-         <p><small>Category: <?= $item->category?> Difficulty: <i><?= $item->difficulty?></i></small></p></summary>
+<?php $this->setProperty('id', $this->getProperty('id')+1); ?>
+
+
+
+
+    <fieldset class="game_item">
+         <legend class="question_top"><small>Question <?=$this->getProperty('id') ?> of <?=$this->getProperty('amount')?> -
+                 Category: <i><?= $this->getProperty('item')->getCategoryName()?></i>
+                 Difficulty: <i><?= $this->getProperty('item')->getDifficultyLevel()?></i>
+            </small>
+             <blockquote><?=  $this->getProperty('item')->getText()?></blockquote>
+         </legend>
+
      <?php
-     foreach ($answers as $aw => $answer) {
-     ?>         <input type="radio" name="answer_question_<?= $id ?>" value="<?=$answer?>"> <?=$answer?><br>
+     foreach ($this->getProperty('item')->getAnswersForDisplay() as $aw => $answer) :
+     ?>        <label class="single_question" for="" onclick="activate(this)">
+                  <input required type="radio" name="answer_question[<?= $this->getProperty('id')-1 ?>]" value="<?=$answer?>">
+                  <?=$answer?>
+                </label>
+
      <?php
-    }
+    endforeach;
      ?>
-        <input type="hidden" name="is_answered_<?= $id ?>" value="0">
-    </details>
+    </fieldset>

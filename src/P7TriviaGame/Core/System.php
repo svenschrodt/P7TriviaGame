@@ -88,4 +88,9 @@ class System
         }
 
     }
+
+    public static function getCurrentMachineInfo()
+    {
+        return php_uname();
+    }
 }

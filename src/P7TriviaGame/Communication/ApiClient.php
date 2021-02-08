@@ -90,10 +90,12 @@ class ApiClient
 
     public function getQuestions($amount = Configuration::DEFAULT_QUESTION_AMOUNT, int $categoryId = 0)
     {
+
         $response = json_decode($this->getQuestionsRaw($amount, $categoryId));
+
         $responseCodeRoot = self::QUESTION_RESPONSE_CODE;
         $resultRoot = self::QUESTION_ROOT_ELEMENT;
-        //@TODO genaral error handling ->network, server booh booh etc.
+        //@TODO general error handling ->network, server booh booh etc.
         if ($response->$responseCodeRoot !== ResponseCode::MSG_SUCCESS) {
             $this->handleNonOkStatus();
         } else {
@@ -104,7 +106,7 @@ class ApiClient
 
     protected function handleNonOkStatus()
     {
-
+            //@TODO decide wether to catch from (file) cache or whatsoever
     }
 
     /**

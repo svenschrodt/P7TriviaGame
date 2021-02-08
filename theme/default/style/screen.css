@@ -1,8 +1,142 @@
 body {
-    color: black;
-    background: white;
-    margin: 0 2em;
-    max-width: 42em;
+    color: #000;
+    background: #fff;
+    margin: 0em 0.2em;
+
     font-family: Calibri, sans-serif;
-    font-size: 1.3em/1.4
+    font-size: 1.4em;
+    border-top:3px green dashed;
+
+}
+
+h1, ul.info_meta {
+    background-color: #181e76;
+    color: white;
+    margin: 0em 0.1em;
+    padding: 0.4em;
+
+}
+ul.info_meta, .result {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0.3em 0.3em;
+    overflow: hidden;
+
+    font-size:0.9em;
+}
+
+ul.info_meta > li {
+    float: left;
+}
+
+ul.info_meta > li a {
+    display: block;
+    color: #5f7ad7;
+    padding: 0.2em 0.4em;
+    text-decoration: none;
+}
+
+ul.info_meta > li a:hover {
+    color: white;
+}
+
+#game {
+
+    margin : 0.2em 0.3em;
+    padding: 0.4em;
+}
+
+.game_item {
+    border-bottom:4px double white;
+}
+
+.single_question {
+    display:block;
+    background: #f1f1f1;;
+    min-width: 13em;
+    padding: 5px;
+    border-bottom: 2px solid white;
+
+}
+
+.single_question:hover, .single_question_active, button {
+    background:  #ddd;
+    padding: 0.3em;
+    border-bottom: 2px solid white;
+}
+
+summary {
+    border: 1px solid  #181e76;
+    padding: 0.2em 0.5em
+
+}
+
+details {
+    border: 1px solid  #181e76;
+}
+
+button {
+    font-size: 1.4em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.question_top {
+    background:  #ddd;
+    padding: 0.3em;
+    border-bottom: 2px solid white;
+}
+
+article {
+    background-color: #181e76;
+}
+
+fieldset {
+    border: none;
+}
+
+legend {
+
+    width: 100%;
+    padding: 5px;
+    border-bottom: 2px solid white;
+
+}
+
+blockquote:before {
+
+    content: open-quote;
+
+}
+
+blockquote:after {
+
+    content: close-quote;
+
+}
+
+
+.correct {
+    border: 1px solid green;
+}
+
+
+.wrong {
+    background:  red;
+    color:white;
+}
+.right {
+    color:white;
+    background:  green;
+}
+
+li_title {
+    min-width: 10em;
+}
+
+summary::before {
+    content: " open for detail information";
 }

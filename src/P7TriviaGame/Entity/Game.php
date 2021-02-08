@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace P7TriviaGame\Entity;
 
+use P7TriviaGame\Application\Configuration;
 use P7TriviaGame\Communication\ApiClient;
 use P7TriviaGame\Application\GameSolver;
 
@@ -46,10 +47,11 @@ class Game
      * @param int $amount
      * @param int $category
      */
-    public function __construct(int $amount = 0, int $category=0)
+    public function __construct(int $amount =  Configuration::DEFAULT_QUESTION_AMOUNT, int $category=0)
     {
         $this->apiClient = new ApiClient();
         $this->questionList = $this->apiClient->getQuestions($amount, $category);
+
     }
 
     /**
@@ -107,6 +109,6 @@ class Game
     }
 
 
-    
+
 
 }

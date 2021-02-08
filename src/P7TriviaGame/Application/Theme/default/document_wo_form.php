@@ -8,11 +8,10 @@
     <h1> <?= $this->getTitle() ?></h1>
 </header>
 <section id="game">
-    <form name=""  autocomplete="off" method="post" action="/P7TriviaGame/solve">
+
     <?= $this->content ?>
-        <input type="hidden" id="amount" value="<?= $this->getProperty('amount')?>">
-        <button> solve</button>
-    </form>
+
+
 </section>
 
 <footer class="bottom">
