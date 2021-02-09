@@ -2,7 +2,8 @@
 /**
  * Simple class managing usage of file system as  cache
  *
- * @TODO DI-Container 4 cfg
+ * @TODO implementation
+ *
  *
  * @package P7TriviaGame
  * @author  Sven Schrodt <sven@schrodt-service.net>

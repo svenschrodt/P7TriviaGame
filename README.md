@@ -6,10 +6,19 @@ Simple trivia game app
   - consuming "Open Trivia DB" API 
   - compatible with PHP 7.4+
 
+## installation
+
+## usage
+
+You can directly use the application without external API call using the dumped questions in file cache
+
+--> @see P7TriviaGame\Persistence\FileCacheApi
 
 ## Technical documentation
 
+### Caching / Persistence
 
+#### File cache persistence
 
 ## Apendix
 

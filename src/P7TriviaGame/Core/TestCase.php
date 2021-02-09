@@ -1,6 +1,6 @@
 <?php
 /**
- * TestCase
+ * TestCase - extending PHPUnit's test case for some 'short hand' functions
  *
  * @package P7TriviaGame
  * @author  Sven Schrodt <sven@schrodt-service.net>

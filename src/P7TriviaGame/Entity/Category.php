@@ -20,11 +20,29 @@ class Category
 {
 
     /**
-     * ID of category
+     * ID of category (md5 hash)
      *
      * @var int
      */
-    protected int $id = 0;
+    protected string $id = '';
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreated(): ?\DateTime
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime|null $created
+     * @return Category
+     */
+    public function setCreated(?\DateTime $created): Category
+    {
+        $this->created = $created;
+        return $this;
+    }
 
     /**
      * Name of category
@@ -33,31 +51,61 @@ class Category
      */
     protected string $name = '';
 
+    protected ?\DateTime $created = null;
+
+    protected int $apiId = 0;
+
     /**
      * Category constructor function
      *
-     * @param int $id
+     * @param string  $id
      * @param string $name
+     * @param api_id
+     * @param \DateTime $created
      */
-    public function __construct(int $id, string $name)
+    public function __construct(string $id, string $name, int $apiId=0, ?\DateTime $created = null )
     {
         $this->id = $id;
         $this->name = $name;
+        if(!is_null($created)) {
+            $this->created = $created;
+        }
+        if($apiId !==0 ) {
+            $this->apiId = $apiId;
+        }
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @return int
+     */
+    public function getApiId(): int
+    {
+        return $this->apiId;
+    }
+
+    /**
+     * @param int $apiId
      * @return Category
      */
-    public function setId(int $id): Category
+    public function setApiId(int $apiId): Category
+    {
+        $this->apiId = $apiId;
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     * @return Category
+     */
+    public function setId(string  $id): Category
     {
         $this->id = $id;
         return $this;

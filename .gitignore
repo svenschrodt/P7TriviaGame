@@ -27,3 +27,4 @@ post.html
 # exclude local configuration
 .local.conf.php
 Foo.php
+maintenance.sql

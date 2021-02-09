@@ -79,6 +79,19 @@ class FileCacheClient
 
     }
 
+
+    public function writeToFile($resource, $data)
+    {
+        file_put_contents($resource,serialize($data));
+    }
+
+
+    public function readFromFile($resource)
+    {
+        return unserialize(file_get_contents($resource));
+    }
+
+
     public function setCategories(array $data)
     {
         file_put_contents($this->categoryCacheResource, serialize($data));

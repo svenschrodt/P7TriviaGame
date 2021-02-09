@@ -22,6 +22,7 @@ use P7TriviaGame\Communication\HttpRequest;
 use P7TriviaGame\Communication\HttpResponse;
 use P7TriviaGame\Persistence\Session;
 use P7TriviaGame\Application\Configuration;
+use P7TriviaGame\Communication\DbCacheClient;
 
 class Factory
 {
@@ -34,7 +35,8 @@ class Factory
      */
     protected static array $container = [
         'session' => null, 'foo' => null, 'config' => null, 'view' => null, 'configuration' => null,
-        'request' => null, 'response' => null
+        'request' => null, 'response' => null,
+        'db_cache_client' => null
     ];
 
     /**
@@ -99,7 +101,20 @@ class Factory
                     }
                     return self::$container['request'];
                     break;
+
+                case  'db_cache_client':
+                    if (is_null(self::$container['db_cache_client'])) {
+                        self::$container['db_cache_client'] = DbCacheClient::getInstance(self::get('configuration'));
+                    }
+                    return self::$container['db_cache_client'];
+                    break;
             }
         }
+    }
+
+
+    protected function factoryByConfiguration($key)
+    {
+
     }
 }

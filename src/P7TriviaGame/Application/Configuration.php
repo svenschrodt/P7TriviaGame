@@ -20,7 +20,7 @@ class Configuration
 
     const APPLICATION_VERSION = '0.1';
 
-    const APPLICATION_THEME_MIDFIX  = '/Application/Theme/';
+    const APPLICATION_THEME_MIDFIX = '/Application/Theme/';
 
     const BASE_API_URI = 'https://opentdb.com/';
 
@@ -46,7 +46,60 @@ class Configuration
     const APPLICATION_CACHE_PATH_SUFFIX = '/Application/Cache/';
 
     /**
-     * Containing current base path of application
+     * @return array
+     */
+    public function getDbSettings(): array
+    {
+        return $this->dbSettings;
+    }
+
+    /**
+     * @param array $dbCredentials
+     * @return Configuration
+     */
+    public function setDbSettings(array $dbCredentials): Configuration
+    {
+        $this->dbSettings = $dbCredentials;
+        return $this;
+    }
+
+    protected int $amount = 0;
+
+    /**
+     * @return int
+     */
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param int $amount
+     * @return Configuration
+     */
+    public function setAmount(int $amount = 0): Configuration
+    {
+        if($amount===0) {
+            $amount = self::DEFAULT_QUESTION_AMOUNT;
+        }
+        $this->amount = $amount;
+        return $this;
+    }
+
+
+
+    /**
+     * Currently used data base settings
+     *
+     * @see setDbCredentials()
+     *
+     * @var array
+     */
+    protected array $dbSettings = ['type' => 'pdo_mysql', 'host' => 'localhost', 'port' => 3306, 'name' => 'p7_trivia', 'user' => 'root', 'pass' => ''];
+
+    /**
+     * Containing current base
+     * path of application
      *
      * @var string|false
      */
@@ -67,7 +120,6 @@ class Configuration
      * @var string
      */
     protected string $currentTheme = 'default';
-
 
 
     /**
@@ -121,15 +173,18 @@ class Configuration
     }
 
 
-    public function getNamedPath(string $name) : string
+    public function getNamedPath(string $name): string
     {
         switch ($name) {
             case self::APPLICATION_CACHE_PATH_SUFFIX:
                 return $this->basePath . self::APPLICATION_CACHE_PATH_SUFFIX;
                 break;
+
+
+            default:
+                return $this->basePath;
         }
     }
-
 
 
     public function __construct()
@@ -141,7 +196,7 @@ class Configuration
     {
 
 
-        return $this->basePath . self::APPLICATION_THEME_MIDFIX . $this->currentTheme .'/';
+        return $this->basePath . self::APPLICATION_THEME_MIDFIX . $this->currentTheme . '/';
     }
     //
 

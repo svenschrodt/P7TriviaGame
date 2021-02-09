@@ -21,6 +21,7 @@ use P7TriviaGame\Application\Configuration;
 use P7TriviaGame\Entity\Category;
 use P7TriviaGame\Entity\Question;
 use P7TriviaGame\Entity\ResponseCode;
+use P7TriviaGame\Application\Error;
 
 class ApiClient
 {
@@ -32,6 +33,12 @@ class ApiClient
 
     const QUESTION_RESPONSE_CODE = 'response_code';
 
+    const API_TOKEN_CHARACTERS = 64;
+
+    const ERROR_API_TOKEN_CHARACTERS =  'Invalid token format: %s - use API to retrieve one!';
+
+    const MAX_QUESTIONS_PER_REQUEST = 50;
+
 
     /**
      * Used HTTP client
@@ -40,17 +47,65 @@ class ApiClient
      */
     private HttpClient $httpClient;
 
+    /**
+     * Current token from API (used to avoid duplicates for six hours)
+     *
+     * @var string|null
+     */
+    private ?string $token = null;
 
+    private bool $useToken = true;
+
+    /**
+     * @return bool
+     */
+    public function isUseToken(): bool
+    {
+        return $this->useToken;
+    }
+
+    /**
+     * @param bool $useToken
+     * @return ApiClient
+     */
+    public function setUseToken(bool $useToken): ApiClient
+    {
+        $this->useToken = $useToken;
+        return $this;
+    }
     /**
      * Constructor function
      *
      * @TODO injecting DI-Container 4 cfg
      * @throws \ErrorException
      */
-    public function __construct()
+    public function __construct(string $tokenToBeused = '')
     {
+        if(!$tokenToBeused === '') {
+            $this->setToken($tokenToBeused);
+        }
         $this->httpClient = new HttpClient();
 
+    }
+
+    /**
+     * @deprecated -> use Factory
+     * @return HttpClient
+     */
+    public function getHttpClient(): HttpClient
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @deprecated -> makes no sense here
+     * @param HttpClient $httpClient
+     * @return ApiClient
+     */
+    public function setHttpClient(HttpClient $httpClient): ApiClient
+    {
+        $this->httpClient = $httpClient;
+        return $this;
     }
 
     /**
@@ -72,9 +127,9 @@ class ApiClient
      * @param false $asArray
      * @return array|mixed
      */
-    public function getCategories($asArray = false)
+    public function getCategories()
     {
-        $foo = json_decode($this->getCategoriesRaw(), $asArray);
+        $foo = json_decode($this->getCategoriesRaw());
         if ($asArray) {
             return $foo[self::CATEGORY_ROOT_ELEMENT];
         } else {
@@ -97,16 +152,17 @@ class ApiClient
         $resultRoot = self::QUESTION_ROOT_ELEMENT;
         //@TODO general error handling ->network, server booh booh etc.
         if ($response->$responseCodeRoot !== ResponseCode::MSG_SUCCESS) {
-            $this->handleNonOkStatus();
+            $this->handleNonOkStatus($response->$responseCodeRoot);
         } else {
             return $this->parseQuestion($response->$resultRoot);
         }
     }
 
 
-    protected function handleNonOkStatus()
+    protected function handleNonOkStatus(string $responseCode )
     {
             //@TODO decide wether to catch from (file) cache or whatsoever
+        throw new Exception('API raised Response code: ' . $responseCode);
     }
 
     /**
@@ -121,6 +177,15 @@ class ApiClient
         if ($categoryId !== 0) {
             $uri .= Configuration::CATEGORY_URI_SUFFIX . $categoryId;
         }
+
+        if($this->useToken && is_null($this->getToken())) {
+            $this->setToken($this->getTokenFromApi());
+        }
+
+        if($this->useToken) {
+            $uri .= '&token=' . $this->getToken();
+        }
+        die($uri);
         return $this->httpClient->get($uri);
     }
 
@@ -134,6 +199,7 @@ class ApiClient
     public function parseQuestion(array $questions): array
     {
         //@FIXME -> refactor me in separate class with defined attributes as class constants
+        // and replace [] with instance of P7TriviaGame\Entity\QuestionList
         $parsed = [];
         foreach ($questions as $question) {
             $new = new Question();
@@ -150,8 +216,29 @@ class ApiClient
 
     }
 
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
 
-    public function getToken()
+    /**
+     * @param string|null $token
+     * @return ApiClient
+     */
+    public function setToken(?string $token): ApiClient
+    {
+        if(strlen($token)!= 64) {
+            throw new \InvalidArgumentException(Error::getMessage(self::ERROR_API_TOKEN_CHARACTERS, $token ) );
+        }
+        $this->token = $token;
+        return $this;
+    }
+
+
+    public function getTokenFromApi()
     {
         //FIXME Response code Check!
         $response = $this->httpClient->get(Configuration::TOKEN_API_URI);
