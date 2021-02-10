@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /**
- * Auto loading for namespace P7TriviaGame - Flowfact holy thursday trivia game
+ * Auto loading for namespace P7TriviaGame 
  *
  * *
  * @package P7TriviaGame
